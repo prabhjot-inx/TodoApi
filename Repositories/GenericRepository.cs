@@ -11,14 +11,14 @@ public class GenericRepository<T> : IRepository<T> where T: class
     _dbSet = context.Set<T>();
   }
 
-  public IEnumerable<T> GetAll()
+  public async Task<IEnumerable<T>> GetAll()
   {
-    return _dbSet.ToList();
+    return await _dbSet.ToListAsync();
   }
 
-  public T GetById(int ID) 
+  public async Task<T> GetById(int ID) 
   {
-    return _dbSet.Find(ID);
+    return await _dbSet.FindAsync(ID);
   }
 
   public T Add(T entiry)

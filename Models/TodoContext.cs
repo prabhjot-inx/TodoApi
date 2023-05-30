@@ -9,5 +9,5 @@ public class TodoContext: DbContext
   }
 
   public DbSet<TodoItem> TodoItems {get; set;} = null!;
-  public DbSet<User> Users {get; set;} = null!;
+  public DbSet<User> User {get; set;} = null!;
 }
