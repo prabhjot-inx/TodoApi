@@ -28,6 +28,47 @@ public class UserController : ControllerBase
     var users = await userRepository.GetAll();
     return Ok(users);
   }
+
+  [HttpGet("{ID}")]
+  public async Task<ActionResult<User>> GetByID(int ID)
+  {
+    var user = await userRepository.GetById(ID);
+    return Ok(user);
+  }
+
+  [HttpPost]
+  public async Task<ActionResult<User>> Create(User user)
+  {
+    User ur = userRepository.Add(user);
+    return CreatedAtAction(nameof(GetByID), new { ID = ur.ID}, ur);
+  }
+
+  [HttpPut("{ID}")]
+  public async Task<ActionResult<User>> Update(int ID, User user)
+  {
+    User ur = await userRepository.GetById(ID);
+    if (ur == null)
+    {
+      return NotFound();
+    }
+    ur.Username = user.Username;
+    ur.Password = user.Password;
+    userRepository.Update(ur);
+    return Ok(ur);
+  }
+
+  [HttpDelete("{ID}")]
+  public async Task<ActionResult> Delete(int ID)
+  {
+    User ur = await userRepository.GetById(ID);
+    if (ur == null)
+    {
+      return NotFound();
+    }
+    
+    userRepository.Delete(ur);
+    return NoContent();
+  }
 }
 
 // namespace TodoApi.Controllers
